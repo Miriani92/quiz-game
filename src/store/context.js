@@ -8,8 +8,6 @@ const categoryInNumbers = {
 
 const URL_START = "https://opentdb.com/api.php?";
 //https://opentdb.com/api.php?amount=10&category=21&difficulty=easy&type=multiple
-const url =
-  "https://opentdb.com/api.php?amount=10&category=21&difficulty=easy&type=multiple";
 
 const QuizContext = React.createContext();
 export const QuizProvider = ({ children }) => {
@@ -32,10 +30,10 @@ export const QuizProvider = ({ children }) => {
       const response = await fetch(url);
       if (response.ok) {
         const data = await response.json();
-        const question = data.results;
+        const questions = data.results;
         setIsQuizEntrance(false);
         setLoading(false);
-        setQuestion();
+        setQuestion(questions);
       } else if (question.length < 1) {
         setIsQuizEntrance(true);
       }
@@ -44,20 +42,27 @@ export const QuizProvider = ({ children }) => {
       setError(error.message);
     }
   };
+  console.log(question);
+  const handleChange = (e) => {
+    e.preventDefault();
+    const value = e.target.value;
+    console.log(value);
+    const name = e.target.name;
+    setQuizSetup({ ...quizSetup, [name]: value });
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const name = e.quizSetup.name;
-    const value = e.quizSetup.value;
-
-    const url = `${URL_START}amount=${quizSetup["numberOfQuestion"]}&category=${
-      categoryInNumbers[quizSetup["category"]]
-    } &difficulty=${quizSetup["difficulty"]}&type=multiple`;
+    const { numberOfQuestion, difficulty, category } = quizSetup;
+    const url = `${URL_START}amount=${numberOfQuestion}&category=${categoryInNumbers[category]}&difficulty=${difficulty}&type=multiple`;
     getQuestions(url);
   };
+  console.log(question);
 
   return (
-    <QuizContext.Provider value={{ quizSetup, setQuizSetup }}>
+    <QuizContext.Provider
+      value={{ quizSetup, handleSubmit, error, handleChange }}
+    >
       {children}
     </QuizContext.Provider>
   );
