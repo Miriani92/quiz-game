@@ -20,7 +20,7 @@ export const QuizProvider = ({ children }) => {
   });
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [error, setError] = useState(false);
-  const [question, setQuestion] = useState([]);
+  const [questions, setQuestions] = useState([]);
   const [indexOfQuestion, setIndexOfQuestion] = useState(0);
 
   const getQuestions = async (url) => {
@@ -33,8 +33,8 @@ export const QuizProvider = ({ children }) => {
         const questions = data.results;
         setIsQuizEntrance(false);
         setLoading(false);
-        setQuestion(questions);
-      } else if (question.length < 1) {
+        setQuestions(questions);
+      } else if (questions.length < 1) {
         setIsQuizEntrance(true);
       }
     } catch (error) {
@@ -42,11 +42,19 @@ export const QuizProvider = ({ children }) => {
       setError(error.message);
     }
   };
-  console.log(question);
+
+  const nextQuestion = () => {
+    let nextQuestionIndex = indexOfQuestion + 1;
+    if (nextQuestionIndex > questions.length - 1) {
+      setIsModalOpen(true);
+      return setIndexOfQuestion(0);
+    }
+    return setIndexOfQuestion(nextQuestionIndex);
+  };
+
   const handleChange = (e) => {
     e.preventDefault();
     const value = e.target.value;
-    console.log(value);
     const name = e.target.name;
     setQuizSetup({ ...quizSetup, [name]: value });
   };
@@ -57,11 +65,21 @@ export const QuizProvider = ({ children }) => {
     const url = `${URL_START}amount=${numberOfQuestion}&category=${categoryInNumbers[category]}&difficulty=${difficulty}&type=multiple`;
     getQuestions(url);
   };
-  console.log(question);
 
   return (
     <QuizContext.Provider
-      value={{ quizSetup, handleSubmit, error, handleChange }}
+      value={{
+        isQuizEntrance,
+        loading,
+        quizSetup,
+        handleSubmit,
+        error,
+        handleChange,
+        isModalOpen,
+        nextQuestion,
+        questions,
+        indexOfQuestion,
+      }}
     >
       {children}
     </QuizContext.Provider>

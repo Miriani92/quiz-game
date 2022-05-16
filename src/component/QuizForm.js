@@ -45,7 +45,7 @@ const QuizForm = () => {
       </div>
       <button
         type="submit"
-        onClick={handleSubmit}
+        onClick={(e) => handleSubmit(e)}
         className={styles.button}
       ></button>
     </main>
