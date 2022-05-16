@@ -22,6 +22,7 @@ export const QuizProvider = ({ children }) => {
   const [error, setError] = useState(false);
   const [questions, setQuestions] = useState([]);
   const [indexOfQuestion, setIndexOfQuestion] = useState(0);
+  const [correct, setCorrect] = useState(0);
 
   const getQuestions = async (url) => {
     setLoading(true);
@@ -51,6 +52,12 @@ export const QuizProvider = ({ children }) => {
     }
     return setIndexOfQuestion(nextQuestionIndex);
   };
+  const chekCorrectAnswers = (value, correctAnswer) => {
+    if (value === correctAnswer) {
+      setCorrect((prev) => prev + 1);
+    }
+    nextQuestion();
+  };
 
   const handleChange = (e) => {
     e.preventDefault();
@@ -76,9 +83,11 @@ export const QuizProvider = ({ children }) => {
         error,
         handleChange,
         isModalOpen,
-        nextQuestion,
+        chekCorrectAnswers,
         questions,
         indexOfQuestion,
+        correct,
+        setCorrect,
       }}
     >
       {children}

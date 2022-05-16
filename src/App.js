@@ -6,7 +6,7 @@ import Modal from "./component/Modal";
 import { useQuizContext } from "./store/context";
 
 function App() {
-  const { isQuizEntrance, loading } = useQuizContext();
+  const { isQuizEntrance, loading, isModalOpen } = useQuizContext();
   if (isQuizEntrance) {
     return <QuizForm />;
   }
@@ -14,6 +14,10 @@ function App() {
   if (loading) {
     return <Loading />;
   }
+  if (isModalOpen) {
+    return <Modal />;
+  }
+
   return (
     <div className="App">
       <h1> hello from the app</h1>
