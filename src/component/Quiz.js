@@ -3,7 +3,6 @@ import styles from "./Quiz.module.css";
 import { useQuizContext } from "../store/context";
 
 const Quiz = () => {
-  const [button, setButton] = useState("");
   const { questions, indexOfQuestion, chekCorrectAnswers, correct } =
     useQuizContext();
 
@@ -20,12 +19,14 @@ const Quiz = () => {
 
   return (
     <div>
+      <span>
+        correct answer:{correct}/{indexOfQuestion}
+      </span>
       <h1 dangerouslySetInnerHTML={{ __html: question }} />
       {allAnswers.map((answer, index) => {
         return (
           <button
             key={index}
-            value={button}
             onClick={() => chekCorrectAnswers(answer, correct_answer)}
             className={styles.button}
           >

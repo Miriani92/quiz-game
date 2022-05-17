@@ -48,13 +48,12 @@ export const QuizProvider = ({ children }) => {
     let nextQuestionIndex = indexOfQuestion + 1;
     if (nextQuestionIndex > questions.length - 1) {
       setIsModalOpen(true);
-      return setIndexOfQuestion(0);
     }
     return setIndexOfQuestion(nextQuestionIndex);
   };
   const chekCorrectAnswers = (value, correctAnswer) => {
     if (value === correctAnswer) {
-      setCorrect((prev) => prev + 1);
+      setCorrect(correct + 1);
     }
     nextQuestion();
   };
