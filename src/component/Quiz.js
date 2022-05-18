@@ -1,14 +1,11 @@
 import React, { useState } from "react";
 import styles from "./Quiz.module.css";
 import { useQuizContext } from "../store/context";
-import QuizForm from "./QuizForm";
 const Quiz = () => {
   const { questions, indexOfQuestion, chekCorrectAnswers, correct } =
     useQuizContext();
-  if (questions.length === 0) {
-    return <QuizForm />;
-  }
-  const { category, correct_answer, difficulty, incorrect_answers, question } =
+
+  const { correct_answer, incorrect_answers, question } =
     questions[indexOfQuestion];
 
   const allAnswers = [...incorrect_answers, correct_answer];

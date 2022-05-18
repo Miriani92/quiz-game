@@ -47,10 +47,12 @@ export const QuizProvider = ({ children }) => {
       setError(true);
     }
   };
-  console.log(error);
   const startOver = () => {
     setIsModalOpen(false);
+    setError(false);
     setIsQuizEntrance(true);
+    setIndexOfQuestion(0);
+    setCorrect(0);
   };
 
   const nextQuestion = () => {
@@ -68,6 +70,7 @@ export const QuizProvider = ({ children }) => {
   };
 
   const handleChange = (e) => {
+    setError(false);
     e.preventDefault();
     const value = e.target.value;
     const name = e.target.name;

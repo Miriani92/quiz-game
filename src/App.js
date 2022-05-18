@@ -10,23 +10,20 @@ function App() {
   const { isQuizEntrance, loading, isModalOpen, error } = useQuizContext();
   let render;
   if (isQuizEntrance || error) {
-    // return <QuizForm />;
     return (render = <QuizForm />);
   }
 
   if (loading) {
-    // return <Loading />;
     return (render = <Loading />);
   }
   if (isModalOpen) {
-    // return <Modal />;
     return (render = <Modal />);
   }
 
   return (
     <div className="app">
       <div>{render}</div>
-      {!isQuizEntrance && <Quiz />}
+      {!error && <Quiz />}
     </div>
   );
 }
