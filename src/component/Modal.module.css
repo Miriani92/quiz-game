@@ -1,0 +1,29 @@
+.modalwrapper {
+  width: 100vw;
+  height: 100vh;
+  background-color: rgb(231, 248, 246);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.modal {
+  padding: 20px;
+  background-color: white;
+  text-align: center;
+  width: 400px;
+  height: 200px;
+}
+.button {
+  margin-top: 2rem;
+  border: transparent;
+  width: 50%;
+  background: #ffb100;
+  color: black;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: capitalize;
+  font-size: 1rem;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}

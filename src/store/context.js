@@ -32,16 +32,25 @@ export const QuizProvider = ({ children }) => {
       if (response.ok) {
         const data = await response.json();
         const questions = data.results;
-        setIsQuizEntrance(false);
-        setLoading(false);
-        setQuestions(questions);
-      } else if (questions.length < 1) {
-        setIsQuizEntrance(true);
+        if (questions.length === 0) {
+          setLoading(false);
+          setIsQuizEntrance(true);
+          setError(true);
+        } else {
+          setIsQuizEntrance(false);
+          setLoading(false);
+          setQuestions(questions);
+        }
       }
     } catch (error) {
       setIsQuizEntrance(true);
-      setError(error.message);
+      setError(true);
     }
+  };
+  console.log(error);
+  const startOver = () => {
+    setIsModalOpen(false);
+    setIsQuizEntrance(true);
   };
 
   const nextQuestion = () => {
@@ -87,6 +96,7 @@ export const QuizProvider = ({ children }) => {
         indexOfQuestion,
         correct,
         setCorrect,
+        startOver,
       }}
     >
       {children}

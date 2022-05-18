@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import styles from "./Quiz.module.css";
 import { useQuizContext } from "../store/context";
-
+import QuizForm from "./QuizForm";
 const Quiz = () => {
   const { questions, indexOfQuestion, chekCorrectAnswers, correct } =
     useQuizContext();
-
+  if (questions.length === 0) {
+    return <QuizForm />;
+  }
   const { category, correct_answer, difficulty, incorrect_answers, question } =
     questions[indexOfQuestion];
 
@@ -18,22 +20,24 @@ const Quiz = () => {
   }
 
   return (
-    <div>
-      <span>
-        correct answer:{correct}/{indexOfQuestion}
-      </span>
-      <h1 dangerouslySetInnerHTML={{ __html: question }} />
-      {allAnswers.map((answer, index) => {
-        return (
-          <button
-            key={index}
-            onClick={() => chekCorrectAnswers(answer, correct_answer)}
-            className={styles.button}
-          >
-            {answer}
-          </button>
-        );
-      })}
+    <div className={styles.quizwrap}>
+      <div className={styles.questions}>
+        <p>
+          correct answer:{correct}/{indexOfQuestion}
+        </p>
+        <h2 dangerouslySetInnerHTML={{ __html: question }} />
+        {allAnswers.map((answer, index) => {
+          return (
+            <button
+              key={index}
+              onClick={() => chekCorrectAnswers(answer, correct_answer)}
+              className={styles.button}
+            >
+              {answer}
+            </button>
+          );
+        })}
+      </div>
     </div>
   );
 };

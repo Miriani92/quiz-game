@@ -3,25 +3,30 @@ import Loading from "./component/Loading";
 import QuizForm from "./component/QuizForm";
 import Quiz from "./component/Quiz";
 import Modal from "./component/Modal";
+import Error from "./component/Error";
 import { useQuizContext } from "./store/context";
 
 function App() {
-  const { isQuizEntrance, loading, isModalOpen } = useQuizContext();
-  if (isQuizEntrance) {
-    return <QuizForm />;
+  const { isQuizEntrance, loading, isModalOpen, error } = useQuizContext();
+  let render;
+  if (isQuizEntrance || error) {
+    // return <QuizForm />;
+    return (render = <QuizForm />);
   }
 
   if (loading) {
-    return <Loading />;
+    // return <Loading />;
+    return (render = <Loading />);
   }
   if (isModalOpen) {
-    return <Modal />;
+    // return <Modal />;
+    return (render = <Modal />);
   }
 
   return (
-    <div className="App">
-      <h1> hello from the app</h1>
-      <Quiz />
+    <div className="app">
+      <div>{render}</div>
+      {!isQuizEntrance && <Quiz />}
     </div>
   );
 }
